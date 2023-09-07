@@ -37,7 +37,7 @@ def decode():
 
     model = get_model(args)
     model.load_state_dict(torch.load(args.model_save_path)["model"])
-    model = model.to(args.device)
+    model = model.to(args.device).eval()
 
 
     with open(args.output_file, "rb") as file:

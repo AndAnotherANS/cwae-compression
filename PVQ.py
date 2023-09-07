@@ -54,7 +54,7 @@ class PVQ:
         for i in range(codes.shape[0]):
             vector_slice = vector[i*self.n:(i+1)*self.n]
             norm = np.linalg.norm(vector_slice, 2, -1)
-            normalized = vector_slice/norm
+            normalized = vector_slice/(norm + 1e-20)
             code = self._get_closest_code(normalized)
             codes[i] = code
             norms[i] = bin(np.float16(norm).view('H'))[2:].zfill(16)

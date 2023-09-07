@@ -12,7 +12,7 @@ def add_arguments(parser: ArgumentParser):
     parser.add_argument("--device", type=str, default="cuda", choices=["cpu", "cuda"])
 
     parser.add_argument("--block_size", type=int, default=4)
-    parser.add_argument("--pvq_k", default=5)
+    parser.add_argument("--pvq_k", type=int, default=5)
 
     parser.add_argument("--pvq_cache_dir", type=str, default="./data/pvq")
 
@@ -41,7 +41,7 @@ def encode():
 
     model = get_model(args)
     model.load_state_dict(torch.load(args.model_save_path)["model"])
-    model = model.to(args.device)
+    model = model.to(args.device).eval()
     pvq = PVQ(args.block_size, args.pvq_k, cache_dir=args.pvq_cache_dir)
 
     encoded = make_header(args)
